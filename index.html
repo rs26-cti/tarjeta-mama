@@ -6,6 +6,7 @@
 <title>Feliz Día Mamá 💖</title>
 
 <style>
+
 *{
     margin:0;
     padding:0;
@@ -16,10 +17,11 @@ body{
     font-family:'Segoe UI',sans-serif;
     overflow:hidden;
     background:black;
+    text-align:center;
 }
 
 /* =========================
-   FONDO GENERAL
+   FONDO
 ========================= */
 
 #background{
@@ -34,7 +36,6 @@ body{
     z-index:-5;
 }
 
-/* OSCURECER */
 #overlay{
     position:fixed;
     width:100%;
@@ -74,7 +75,7 @@ body{
 }
 
 /* =========================
-   PAGINA 1
+   TITULO
 ========================= */
 
 .title{
@@ -95,6 +96,10 @@ body{
         transform:translateY(0);
     }
 }
+
+/* =========================
+   CUADROS
+========================= */
 
 .box-container{
     margin-top:40px;
@@ -155,7 +160,7 @@ button{
     color:white;
     overflow-y:auto;
     font-size:1.1rem;
-    line-height:1.8;
+    line-height:1.35;
     border:1px solid rgba(255,255,255,0.25);
 }
 
@@ -177,13 +182,13 @@ button{
 }
 
 /* =========================
-   CORAZONES
+   LLUVIA CORAZONES
 ========================= */
 
 .heart{
     position:fixed;
     top:-20px;
-    color:rgba(255,255,255,0.75);
+    color:rgba(255,255,255,0.70);
     animation:fall linear forwards;
     z-index:999;
     pointer-events:none;
@@ -208,6 +213,46 @@ button{
     letter-spacing:1px;
     z-index:9999;
 }
+
+/* =========================
+   MUSICA
+========================= */
+
+.music-btn{
+    position:fixed;
+    top:10px;
+    right:10px;
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    border:none;
+    background:rgba(255,255,255,0.15);
+    backdrop-filter:blur(5px);
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+    z-index:9999;
+}
+
+/* =========================
+   REINICIO
+========================= */
+
+#restartBtn{
+    position:fixed;
+    bottom:10px;
+    left:10px;
+    width:32px;
+    height:32px;
+    border-radius:50%;
+    border:none;
+    background:rgba(255,255,255,0.12);
+    color:white;
+    font-size:14px;
+    cursor:pointer;
+    z-index:9999;
+}
+
 </style>
 </head>
 
@@ -217,13 +262,19 @@ button{
 <div id="overlay"></div>
 
 <!-- AUDIO -->
-<audio autoplay loop>
+
+<audio id="music" loop>
 <source src="https://raw.githubusercontent.com/rs26-cti/tarjeta-mama/main/musica.mp3" type="audio/mpeg">
 </audio>
+
+<button class="music-btn" onclick="toggleMusic()">
+🎵
+</button>
 
 <!-- =========================
      PAGINA 1
 ========================= -->
+
 <section class="page active" id="page1">
 
     <h1 class="title">
@@ -253,14 +304,17 @@ button{
 <!-- =========================
      PAGINA 2
 ========================= -->
+
 <section class="page hidden" id="page2">
 
     <div class="letter">
+
         <div id="poema" class="typewriter"></div>
 
-        <button onclick="loveClick()">
-            Te Ama Mamá 💖
+        <button onclick="loveClick()" id="loveBtn">
+            Te Amo Mamá 💖
         </button>
+
     </div>
 
 </section>
@@ -268,6 +322,7 @@ button{
 <!-- =========================
      PAGINA 3
 ========================= -->
+
 <section class="page hidden" id="page3">
 
     <img class="final-photo"
@@ -276,14 +331,21 @@ button{
 </section>
 
 <!-- FIRMA -->
+
 <div class="signature">
     CTI - Centro Técnico Informático
 </div>
 
+<!-- REINICIO -->
+
+<button id="restartBtn" onclick="location.reload()">
+↻
+</button>
+
 <script>
 
 /* =========================
-   CAMBIO DE PAGINAS
+   CAMBIO PAGINAS
 ========================= */
 
 function nextPage(actual,siguiente){
@@ -303,7 +365,7 @@ function nextPage(actual,siguiente){
 }
 
 /* =========================
-   MAQUINA DE ESCRIBIR
+   TEXTO MAQUINA
 ========================= */
 
 const texto = `
@@ -344,7 +406,7 @@ function escribir(){
 setTimeout(escribir,3500);
 
 /* =========================
-   LLUVIA DE CORAZONES
+   CORAZONES
 ========================= */
 
 function crearCorazon(){
@@ -373,7 +435,7 @@ function crearCorazon(){
 setInterval(crearCorazon,180);
 
 /* =========================
-   EXPLOSION DE CORAZONES
+   BOTON TE AMO
 ========================= */
 
 let clicks = 0;
@@ -381,6 +443,21 @@ let clicks = 0;
 function loveClick(){
 
     clicks++;
+
+    const btn = document.getElementById("loveBtn");
+
+    if(clicks == 1){
+
+        btn.innerText = "Te amo mucho 💖";
+
+    }else if(clicks == 2){
+
+        btn.innerText = "Mucho Mucho... 💕";
+
+    }else if(clicks == 3){
+
+        btn.innerText = "TE AMO ❤️";
+    }
 
     for(let i=0;i<40;i++){
 
@@ -424,7 +501,31 @@ function loveClick(){
 
         setTimeout(()=>{
             nextPage(2,3);
-        },1200);
+        },1400);
+    }
+}
+
+/* =========================
+   MUSICA
+========================= */
+
+const music = document.getElementById("music");
+
+window.addEventListener("click",()=>{
+
+    music.play();
+
+},{once:true});
+
+function toggleMusic(){
+
+    if(music.paused){
+
+        music.play();
+
+    }else{
+
+        music.pause();
 
     }
 }
