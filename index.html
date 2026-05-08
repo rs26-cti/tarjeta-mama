@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feliz Día Mamá 💖</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Segoe UI',sans-serif;
+    overflow:hidden;
+    background:black;
+}
+
+/* =========================
+   FONDO GENERAL
+========================= */
+
+#background{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background-image:url('https://raw.githubusercontent.com/usuario/repositorio/main/fondo.jpg');
+    background-size:cover;
+    background-position:center;
+    z-index:-5;
+}
+
+/* OSCURECER */
+#overlay{
+    position:fixed;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.35);
+    z-index:-4;
+}
+
+/* =========================
+   PAGINAS
+========================= */
+
+.page{
+    position:absolute;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    padding:20px;
+    transition:transform 1.5s ease, opacity 1.5s ease;
+    backface-visibility:hidden;
+}
+
+.hidden{
+    opacity:0;
+    pointer-events:none;
+    transform:rotateY(90deg);
+}
+
+.active{
+    opacity:1;
+    transform:rotateY(0deg);
+}
+
+/* =========================
+   PAGINA 1
+========================= */
+
+.title{
+    color:white;
+    font-size:2.2rem;
+    text-align:center;
+    opacity:0;
+    animation:fadeIn 3s forwards;
+}
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(30px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.box-container{
+    margin-top:40px;
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+}
+
+.box{
+    background:rgba(255,255,255,0.15);
+    backdrop-filter:blur(8px);
+    border:1px solid rgba(255,255,255,0.2);
+    border-radius:20px;
+    color:white;
+    padding:20px;
+    transform:translateX(-120%);
+    animation:slideRight 2s forwards;
+}
+
+.box:nth-child(2){
+    animation-delay:1s;
+}
+
+@keyframes slideRight{
+    to{
+        transform:translateX(0);
+    }
+}
+
+/* =========================
+   BOTONES
+========================= */
+
+button{
+    margin-top:35px;
+    padding:14px 24px;
+    border:none;
+    border-radius:30px;
+    background:#ff4b7d;
+    color:white;
+    font-size:1rem;
+    cursor:pointer;
+    box-shadow:0 0 15px rgba(255,75,125,0.5);
+}
+
+/* =========================
+   CARTA
+========================= */
+
+.letter{
+    width:100%;
+    height:85%;
+    background:rgba(255,255,255,0.15);
+    backdrop-filter:blur(10px);
+    border-radius:25px;
+    padding:25px;
+    color:white;
+    overflow-y:auto;
+    font-size:1.1rem;
+    line-height:1.8;
+    border:1px solid rgba(255,255,255,0.25);
+}
+
+.typewriter{
+    border-right:2px solid rgba(255,255,255,0.7);
+    white-space:pre-line;
+    overflow:hidden;
+}
+
+/* =========================
+   FOTO FINAL
+========================= */
+
+.final-photo{
+    width:90%;
+    max-width:400px;
+    border-radius:25px;
+    box-shadow:0 0 30px rgba(255,255,255,0.4);
+}
+
+/* =========================
+   CORAZONES
+========================= */
+
+.heart{
+    position:fixed;
+    top:-20px;
+    color:rgba(255,255,255,0.75);
+    animation:fall linear forwards;
+    z-index:999;
+    pointer-events:none;
+}
+
+@keyframes fall{
+    to{
+        transform:translateY(110vh);
+    }
+}
+
+/* =========================
+   FIRMA
+========================= */
+
+.signature{
+    position:fixed;
+    bottom:8px;
+    right:12px;
+    color:rgba(255,255,255,0.35);
+    font-size:11px;
+    letter-spacing:1px;
+    z-index:9999;
+}
+</style>
+</head>
+
+<body>
+
+<div id="background"></div>
+<div id="overlay"></div>
+
+<!-- AUDIO -->
+<audio autoplay loop>
+<source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+</audio>
+
+<!-- =========================
+     PAGINA 1
+========================= -->
+<section class="page active" id="page1">
+
+    <h1 class="title">
+        Feliz Día Mamá 💖
+    </h1>
+
+    <div class="box-container">
+
+        <div class="box">
+            Gracias por cada abrazo,
+            por cada consejo y por tu amor infinito.
+        </div>
+
+        <div class="box">
+            Hoy celebramos a la mujer
+            más especial del mundo 🌸
+        </div>
+
+    </div>
+
+    <button onclick="nextPage(1,2)">
+        Siguiente 💕
+    </button>
+
+</section>
+
+<!-- =========================
+     PAGINA 2
+========================= -->
+<section class="page hidden" id="page2">
+
+    <div class="letter">
+        <div id="poema" class="typewriter"></div>
+
+        <button onclick="loveClick()">
+            Te Ama Mamá 💖
+        </button>
+    </div>
+
+</section>
+
+<!-- =========================
+     PAGINA 3
+========================= -->
+<section class="page hidden" id="page3">
+
+    <img class="final-photo"
+    src="https://raw.githubusercontent.com/usuario/repositorio/main/mama.jpg">
+
+</section>
+
+<!-- FIRMA -->
+<div class="signature">
+    CTI - Centro Técnico Informático
+</div>
+
+<script>
+
+/* =========================
+   CAMBIO DE PAGINAS
+========================= */
+
+function nextPage(actual,siguiente){
+
+    document.getElementById("page"+actual)
+    .classList.remove("active");
+
+    document.getElementById("page"+actual)
+    .classList.add("hidden");
+
+    document.getElementById("page"+siguiente)
+    .classList.remove("hidden");
+
+    document.getElementById("page"+siguiente)
+    .classList.add("active");
+
+}
+
+/* =========================
+   MAQUINA DE ESCRIBIR
+========================= */
+
+const texto = `
+Mamá...
+
+Tu amor es el refugio
+donde siempre encuentro paz.
+
+Tus palabras son fuerza,
+tus abrazos son hogar
+y tu sonrisa ilumina mi vida.
+
+Gracias por cada sacrificio,
+por cada noche cuidándome
+y por jamás dejarme solo.
+
+Hoy quiero recordarte
+lo importante que eres para mí.
+
+Te amo infinitamente 💖
+`;
+
+let i = 0;
+
+function escribir(){
+
+    if(i < texto.length){
+
+        document.getElementById("poema")
+        .innerHTML += texto.charAt(i);
+
+        i++;
+
+        setTimeout(escribir,45);
+    }
+}
+
+setTimeout(escribir,3500);
+
+/* =========================
+   LLUVIA DE CORAZONES
+========================= */
+
+function crearCorazon(){
+
+    const heart = document.createElement("div");
+
+    heart.classList.add("heart");
+
+    heart.innerHTML = "💖";
+
+    heart.style.left = Math.random()*100+"vw";
+
+    heart.style.fontSize =
+    (Math.random()*12+8)+"px";
+
+    heart.style.animationDuration =
+    (Math.random()*5+5)+"s";
+
+    document.body.appendChild(heart);
+
+    setTimeout(()=>{
+        heart.remove();
+    },10000);
+}
+
+setInterval(crearCorazon,180);
+
+/* =========================
+   EXPLOSION DE CORAZONES
+========================= */
+
+let clicks = 0;
+
+function loveClick(){
+
+    clicks++;
+
+    for(let i=0;i<40;i++){
+
+        const heart = document.createElement("div");
+
+        heart.innerHTML="💖";
+
+        heart.style.position="fixed";
+        heart.style.left="50%";
+        heart.style.top="50%";
+        heart.style.fontSize=
+        (Math.random()*20+10)+"px";
+
+        heart.style.pointerEvents="none";
+        heart.style.zIndex="9999";
+
+        document.body.appendChild(heart);
+
+        const x = (Math.random()-0.5)*600;
+        const y = (Math.random()-0.5)*600;
+
+        heart.animate([
+            {
+                transform:'translate(0,0)',
+                opacity:1
+            },
+            {
+                transform:`translate(${x}px,${y}px)`,
+                opacity:0
+            }
+        ],{
+            duration:1500
+        });
+
+        setTimeout(()=>{
+            heart.remove();
+        },1500);
+    }
+
+    if(clicks >= 3){
+
+        setTimeout(()=>{
+            nextPage(2,3);
+        },1200);
+
+    }
+}
+
+</script>
+
+</body>
+</html>
